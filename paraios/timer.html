@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Selector de Hora y Envío de Datos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos para el diseño de la página */
+        html, body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: url("fondo.jpg");
+            background-size: cover;
+        }
+
+        /* Estilos para la cabecera */
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            z-index: 999;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        /* Estilos para los nuevos botones del menú */
+        .header-buttons {
+            display: flex;
+            justify-content: space-evenly;
+            padding: 5px 0;
+        }
+
+        .header-buttons a {
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header-buttons a:hover {
+            background-color: #4c53af;
+        }
+
+        /* Ajuste de margen superior para el contenido principal */
+        .main-content {
+            margin-top: 80px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            justify-items: center;
+        }
+
+        /* Espacio entre la palabra "Ruta" y el menú */
+        label[for="commandsPath"] {
+            margin-right: 5px;
+        }
+
+        /* Estilo para el campo de entrada de la ruta */
+        #commandsPath {
+            font-size: 18px;
+            padding: 5px;
+            width: 30px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Estilos para los selectores de hora */
+        .time-selector {
+            @media screen and (max-width: 480px) {
+                #commandsPath {
+                    width: 90%;
+                }
+
+                input[type="time"] {
+                    width: 80%;
+                }
+            }            
+        }
+
+        .time-selector label {
+            font-size: 18px;
+            margin-right: 5px;
+        }
+
+        .time-selector input {
+            font-size: 18px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Estilos para el botón de enviar horas */
+        #sendButton {
+            font-size: 24px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #4c53af;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #sendButton:hover {
+            background-color: #030e03;
+        }
+
+        /* Estilo para mostrar mensajes recibidos */
+        #messages {
+            margin-top: 20px;
+        }
+
+        /* Estilos para la palabra "ELECTRION" */
+        .header-word {
+            background-color: #0d9cd5;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-buttons">
+            <a href="index.html">Inicio</a>
+            <a href="timer.html">Timers</a>
+            <a href="tips.html">Tips</a>
+            <a href="settings.html">Settings</a>
+        </div>
+    </div>
+
+    <div class="header-word">ELECTRION</div>
+
+    <div class="main-content">
+        <!-- Campo de entrada para ingresar la ruta -->
+        <label for="commandsPath">Ruta:</label>
+        <input type="text" id="commandsPath" placeholder="Ingresa la ruta...">
+
+        <!-- Selectores de hora -->
+        <div class="time-selector">
+            <label for="timeInput1">on1:</label>
+            <input type="time" id="timeInput1">
+        </div>
+
+        <div class="time-selector">
+            <label for="timeInput2">off1:</label>
+            <input type="time" id="timeInput2">
+        </div>
+
+        <!-- Repite este bloque para los otros 4 selectores de hora -->
+        <div class="time-selector">
+            <label for="timeInput3">on2</label>
+            <input type="time" id="timeInput3">
+        </div>
+
+        <div class="time-selector">
+            <label for="timeInput4">off2:</label>
+            <input type="time" id="timeInput4">
+        </div>
+
+        <div class="time-selector">
+            <label for="timeInput5">on3</label>
+            <input type="time" id="timeInput5">
+        </div>
+
+        <div class="time-selector">
+            <label for="timeInput6">off3:</label>
+            <input type="time" id="timeInput6">
+        </div>
+    </div>
+
+    <!-- Botón para enviar las horas -->
+    <button id="sendButton" onclick="sendCommands()">Enviar Horas</button>
+
+    <!-- Div para mostrar los mensajes recibidos -->
+    <div id="messages"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase.js"></script>
+    <script>
+        // Tu código JavaScript aquí
+    </script>
+</body>
+</html>
+

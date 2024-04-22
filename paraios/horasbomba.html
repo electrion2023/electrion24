@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Mantenimiento para Piscina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos para el diseño de la página */
+        html, body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Estilos para la cabecera */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background-color: #000000;
+            color: white;
+            padding: 5px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        /* Estilos para los nuevos botones en la cabecera */
+        .header-buttons a {
+            text-decoration: none;
+            color: rgb(252, 252, 252);
+            margin-right: 2px;
+            font-size: 16px;
+            background-color: #06420600;
+            padding: 10px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header-buttons a:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilos para el contenido */
+        .content {
+            max-width: 400px;
+            padding: 16px;
+        }
+
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-buttons">
+        <a href="index.html">Inicio</a>
+        <a href="timer.html">Timers</a>
+        <a href="tips.html">Tips</a>
+        <a href="settings.html">Settings</a>
+    </div>
+</div>
+
+<body>
+    <div class="content">
+        <h1>Calculadora de Mantenimiento para Piscina</h1>
+        <label for="pumpSelector">Seleccionar bomba:</label>
+        <select id="pumpSelector" name="pumpSelector" onchange="calculate()">
+            <option value="9000">1/4 hp</option>
+            <option value="11000">1/2 hp</option>
+            <option value="13000">3/4 hp</option>
+            <option value="15000">1 hp</option>
+            <option value="17000">1.5 hp</option>
+            <option value="19000">2 hp</option>
+        </select>
+        <br>
+        <label for="poolVolume">Volumen de la piscina (litros):</label>
+        <input type="number" id="poolVolume" name="poolVolume" placeholder="Ej. 10000" oninput="calculate()">
+        <div class="result" id="hoursResult"></div>
+        <div class="result" id="chlorineResult"></div>
+        <div class="result" id="ionizerResult"></div>
+        <div class="result" id="algaecideResult"></div>
+        <div class="result" id="algaecion"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const pumpValue = parseFloat(document.getElementById("pumpSelector").value);
+            const poolVolume = parseFloat(document.getElementById("poolVolume").value);
+
+            if (isNaN(poolVolume) || isNaN(pumpValue)) {
+                document.getElementById("hoursResult").innerHTML = "";
+                document.getElementById("chlorineResult").innerHTML = "";
+                document.getElementById("ionizerResult").innerHTML = "";
+                document.getElementById("algaecideResult").innerHTML = "";
+                document.getElementById("algaecion").innerHTML = "";
+                return;
+            }
+
+            const hoursNeeded = Math.ceil(poolVolume / pumpValue);
+            const chlorineNeeded = (poolVolume / 10000) * 20;
+            const ionizerResult = chlorineNeeded * 0.25;
+            const algaecideNeeded = (poolVolume / 10000) * 100;
+            const algaecion = (12 * 10000) * 0;
+
+            document.getElementById("hoursResult").innerHTML = `Horas minimas de uso de la bomba: ${hoursNeeded} horas`;
+            document.getElementById("chlorineResult").innerHTML = `Cloro necesario: ${chlorineNeeded.toFixed(0)} gramos`;
+            document.getElementById("algaecideResult").innerHTML = `Alguicida necesario: ${algaecideNeeded.toFixed(0)} ml.`;
+            document.getElementById("ionizerResult").innerHTML = `Con ionizador: ${ionizerResult.toFixed(0)} gramos`;
+            document.getElementById("algaecion").innerHTML = `Con ionizador, no se necesita alguicida.`;
+        }
+    </script>
+</body>
+</html>
+
+

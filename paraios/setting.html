@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Configurar Equipo "electrion"</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos generales */
+        html, body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        body {
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Estilos para la palabra "ELECTRION" */
+        .header-word {
+            background-color: #d5b40d;
+            color: #fff;
+            font-size: 36px; /* Tamaño de la tipografía más grande */
+            font-weight: bold; /* Tipografía más gruesa */
+            padding: 10px;
+            width: 100%;
+        }
+
+        /* Estilos para el margen superior del menú */
+        .header {
+            margin-top: 10px; /* Reduzco el margen superior para que el menú no quede encimado */
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        /* Estilos para los botones del encabezado */
+        .header-buttons {
+            background-color: #000; /* Fondo negro para el menú */
+            width: 100%;
+            padding: 5px;
+            display: flex;
+            justify-content: center; /* Alinear los elementos del menú al centro */
+            flex-wrap: wrap; /* Permitir que los elementos se envuelvan en una nueva línea si no caben en una sola fila */
+        }
+
+        .header-buttons a {
+            text-decoration: none;
+            color: rgb(252, 252, 252);
+            margin: 0 10px; /* Espacio entre los elementos del menú */
+            font-size: 16px;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header-buttons a:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilos para el contenido */
+        .content {
+            max-width: 600px;
+            width: 100%;
+            display: flex;
+            align-items: flex-start; /* Alinear contenido al inicio verticalmente */
+            flex-wrap: wrap; /* Permitir que los elementos se envuelvan en una nueva línea si no caben en una sola fila */
+        }
+
+        .content img {
+            max-width: 200px; /* Ancho máximo de la imagen */
+            margin-right: 20px; /* Espacio entre la imagen y el texto */
+            flex: 0 0 auto; /* Evitar que la imagen se estire para ocupar el espacio disponible */
+            /* Estilos para centrar la imagen */
+            display: block;
+            margin: 0 auto;
+        }
+
+        .content h1 {
+            margin-top: 0;
+            flex: 1; /* Permitir que el título ocupe todo el ancho restante disponible */
+        }
+
+        .content ol {
+            flex-basis: 100%; /* Permitir que la lista ocupe todo el ancho disponible */
+            text-align: left;
+            margin-left: 20px;
+        }
+
+        .content p {
+            flex-basis: 100%; /* Permitir que los párrafos ocupen todo el ancho disponible */
+            text-align: left;
+            margin: 10px 0;
+        }
+
+        /* Estilos para la nota */
+        .nota {
+            font-size: 14px;
+            color: #666666;
+            margin-top: 20px;
+            flex-basis: 100%; /* Permitir que la nota ocupe todo el ancho disponible */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header-word">ELECTRION</div>
+
+    <div class="header">
+        <div class="header-buttons">
+            <a href="index.html">Inicio</a>
+            <a href="timer.html">Timers</a>
+            <a href="tips.html">Tips</a>
+            <a href="settings.html">Settings</a>
+        </div>
+    </div>
+
+
+    <div class="content">
+        <h1>Instrucciones de Conexión WiFi para el equipo "electrion"</h1>
+        <p>Bienvenido al equipo "electrion". Para conectar el equipo a tu red WiFi, sigue estos pasos:</p>
+        
+        <ol>
+            <li>Enciende el equipo "electrion" y espera unos segundos.</li>
+            <li>Cuando la luz LED esté parpadeando, busca en tu dispositivo (teléfono, tablet o computadora) la red WiFi llamada "electrion" o similar.</li>
+            <li>Conéctate a la red "electrion". Es posible que se te pida una contraseña, en ese caso, ingresa la contraseña proporcionada en las especificaciones del equipo.</li>
+            <li>Se abrirá una página web del WiFiManager, donde podrás ver las redes WiFi disponibles a tu alcance.</li>
+            <li>Selecciona tu red WiFi en la lista y luego ingresa la contraseña de tu red WiFi en el campo correspondiente.</li>
+            <li>Finalmente, haz clic en el botón "Guardar" o "Conectar" para que el equipo "electrion" se conecte a tu red WiFi.</li>
+            <li>El equipo "electrion" se reiniciará y se conectará automáticamente a tu red WiFi.</li>
+        </ol>
+        
+        <p class="nota">Nota: Es recomendable desactivar los datos móviles de tu teléfono antes de conectarte al "electrion" para asegurarte de que te conectas correctamente a la red WiFi del equipo.</p>
+    </div>
+
+    <button class="configurar-button" onclick="window.open('http://192.168.4.1', '_blank')">Configurar</button>
+</body>
+</html>
+
+        

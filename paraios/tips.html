@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Botones de Ejemplo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Estilos para el diseño de la página */
+    html, body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+
+    body {
+      background-color: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Estilos para la palabra "ELECTRION" */
+    .header-word {
+      background-color: #d5b40d;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 10px;
+      width: 100%;
+    }
+
+    /* Estilos para el margen superior del menú */
+    .header {
+      margin-top: 50px;
+    }
+
+    /* Estilos para los botones */
+    .button-container {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .button {
+      font-size: 24px;
+      padding: 10px 20px;
+      margin: 5px;
+      background-color: #7198e048;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 80vw; /* Ancho del botón como el 80% del ancho de la pantalla */
+      max-width: 300px; /* Ancho máximo si el nombre es muy largo */
+      text-align: center;
+    }
+
+    .button:hover {
+      background-color: #030e03;
+    }
+
+    /* Estilos para la cabecera */
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      background-color: #000000;
+      color: white;
+      padding: 5px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .header h1 {
+      margin: 0;
+    }
+
+    /* Estilos para los nuevos botones en la cabecera */
+    .header-buttons a {
+      text-decoration: none;
+      color: rgb(252, 252, 252);
+      margin-right: 2px;
+      font-size: 18px;
+      background-color: #06420600;
+      padding: 10px 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .header-buttons a:hover {
+      background-color: #45a049;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="header-word">ELECTRION</div>
+
+  <div class="header">
+    <div class="header-buttons">
+      <a href="index.html">Inicio</a>
+      <a href="timer.html">Timers</a>
+      <a href="tips.html">Tips</a>
+      <a href="settings.html">Settings</a>
+    </div>
+  </div>
+
+  <!-- Botones adicionales -->
+  <div class="button-container">
+    <a href="piscina.html"><div class="button">calcula lts.</div></a>
+    <a href="calculapH.html"><div class="button">calcula PH</div></a> 
+    <a href="horasbomba.html"><div class="button">calcula Cl</div></a>  
+    <a href="elPHenlaPiscina.html"><div class="button">problemas de ph</div></a>
+    <a href="aguaverde.html"><div class="button">agua verde</div></a>
+    <a href="filtro.html"><div class="button">filtro</div></a>
+    <a href="agua.html"><div class="button">el agua</div></a>
+  </div>
+
+</body>
+</html>
