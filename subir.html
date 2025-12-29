@@ -1,100 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Subida de Imágenes</title>
-<style>
-  body { font-family: Arial; background: #f2f2f2; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-  .box { background: #fff; padding: 20px; border-radius: 8px; width: 320px; box-shadow: 0 0 10px rgba(0,0,0,.1); text-align: center; }
-  label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
-  input, button { width: 100%; margin-top: 5px; box-sizing: border-box; }
-  button { margin-top: 20px; padding: 10px; background: #28a745; color: #fff; border: none; cursor: pointer; border-radius: 5px; font-weight: bold; }
-  img { margin-top: 20px; max-width: 100%; border: 1px solid #ddd; border-radius: 4px; }
-  #estado { margin-top: 10px; font-size: 14px; font-weight: bold; }
-</style>
+    <meta charset="UTF-8">
+    <title>Subida Forzada</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 350px; text-align: center; }
+        h2 { color: #333; margin-bottom: 20px; }
+        label { display: block; text-align: left; margin-top: 15px; font-weight: bold; color: #555; }
+        input { width: 100%; margin-top: 5px; padding: 8px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; margin-top: 25px; padding: 12px; background: #28a745; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #218838; }
+        #estado { margin-top: 20px; font-weight: bold; min-height: 24px; }
+        img { margin-top: 20px; max-width: 100%; border-radius: 10px; border: 2px solid #eee; }
+    </style>
 </head>
 <body>
 
-<div class="box">
-  <h2>Subir imágenes</h2>
+<div class="card">
+    <h2>Actualizar Fotos</h2>
+    
+    <label>Imagen 1 (foto1)</label>
+    <input type="file" id="foto1" accept="image/*">
 
-  <label>Foto 1</label>
-  <input type="file" id="foto1" accept="image/*">
+    <label>Imagen 2 (foto2)</label>
+    <input type="file" id="foto2" accept="image/*">
 
-  <label>Foto 2</label>
-  <input type="file" id="foto2" accept="image/*">
+    <button onclick="procesarSubida()">¡SUBIR AHORA!</button>
+    <p id="estado"></p>
 
-  <button onclick="subir()">Subir y Reemplazar</button>
-  <p id="estado"></p>
-
-  <label>Vista previa (Foto 1):</label>
-  <img id="preview" src="https://res.cloudinary.com/dxgplmbg/image/upload/imagenes/foto1.jpg">
+    <div id="visor" style="display:none;">
+        <p style="font-size: 12px; color: #888;">Vista previa foto 1:</p>
+        <img id="preview" src="">
+    </div>
 </div>
 
 <script>
-// Tus credenciales según las capturas
-const CLOUD_NAME = "dxgplmbg";
-const UPLOAD_PRESET = "github_upload";
+// Tus credenciales directas de las capturas
+const CLOUD_NAME = "dxgplmbg"; //
+const API_KEY = "642941376157928"; //
+const UPLOAD_PRESET = "github_upload"; //
 
-async function subir() {
-  const f1 = document.getElementById("foto1").files[0];
-  const f2 = document.getElementById("foto2").files[0];
-  const estado = document.getElementById("estado");
-  const preview = document.getElementById("preview");
+async function procesarSubida() {
+    const f1 = document.getElementById("foto1").files[0];
+    const f2 = document.getElementById("foto2").files[0];
+    const estado = document.getElementById("estado");
 
-  if (!f1 || !f2) {
-    estado.innerText = "⚠️ Seleccioná ambos archivos";
-    estado.style.color = "orange";
-    return;
-  }
+    if (!f1 || !f2) {
+        estado.innerText = "⚠️ Seleccioná los dos archivos";
+        estado.style.color = "orange";
+        return;
+    }
 
-  estado.innerText = "Subiendo... ⏳";
-  estado.style.color = "black";
+    estado.innerText = "Subiendo... No cierres esta ventana ⏳";
+    estado.style.color = "#333";
 
-  try {
-    // Subimos ambas enviando el nombre a través del archivo
-    await enviarACloudinary(f1, "foto1");
-    await enviarACloudinary(f2, "foto2");
+    try {
+        // Usamos el API KEY para forzar el Public ID "foto1" y "foto2" 
+        // dentro de la carpeta "imagenes"
+        await subirImagen(f1, "imagenes/foto1");
+        await subirImagen(f2, "imagenes/foto2");
 
-    estado.innerText = "✅ ¡Éxito! Guardadas en carpeta 'imagenes'";
-    estado.style.color = "green";
+        estado.innerText = "✅ ¡LISTO! Fotos reemplazadas.";
+        estado.style.color = "green";
 
-    // Actualizar vista previa (con timestamp para evitar caché)
-    preview.src = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/imagenes/foto1.jpg?v=${new Date().getTime()}`;
+        // Mostrar vista previa con truco de tiempo para que no cargue la vieja
+        const imgUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/imagenes/foto1.jpg?v=${new Date().getTime()}`;
+        document.getElementById("preview").src = imgUrl;
+        document.getElementById("visor").style.display = "block";
 
-  } catch (e) {
-    estado.innerText = "❌ " + e.message;
-    estado.style.color = "red";
-  }
+    } catch (e) {
+        estado.innerText = "❌ Error: " + e.message;
+        estado.style.color = "red";
+        console.error(e);
+    }
 }
 
-async function enviarACloudinary(file, nombreFijo) {
-  const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
-  const formData = new FormData();
+async function subirImagen(file, idPublico) {
+    const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
+    const formData = new FormData();
 
-  // Renombramos el archivo aquí mismo. 
-  // Tu preset usará este nombre como Public ID
-  const blob = file.slice(0, file.size, file.type);
-  const nuevoArchivo = new File([blob], `${nombreFijo}.jpg`, { type: 'image/jpeg' });
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+    formData.append("api_key", API_KEY); // Usamos tu llave para saltar bloqueos
+    formData.append("public_id", idPublico);
+    formData.append("overwrite", "true"); // Forzamos el reemplazo
 
-  formData.append("file", nuevoArchivo);
-  formData.append("upload_preset", UPLOAD_PRESET);
-  
-  // NO agregamos API KEY ni PUBLIC_ID porque el preset es Unsigned 
-  // y tiene "Disallow public id: true"
+    const respuesta = await fetch(url, { method: "POST", body: formData });
+    const resultado = await respuesta.json();
 
-  const resp = await fetch(url, {
-    method: "POST",
-    body: formData
-  });
-
-  const datos = await resp.json();
-
-  if (!resp.ok) {
-    throw new Error(datos.error.message);
-  }
-  
-  return datos;
+    if (!respuesta.ok) {
+        throw new Error(resultado.error.message);
+    }
+    return resultado;
 }
 </script>
 
