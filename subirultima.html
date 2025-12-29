@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Subida con API Key</title>
+    <style>
+        body { font-family: Arial; background: #f2f2f2; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: #fff; padding: 25px; border-radius: 12px; width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        label { display: block; margin-top: 15px; font-weight: bold; text-align: left; }
+        input { width: 100%; margin-top: 5px; }
+        button { width: 100%; margin-top: 25px; padding: 12px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 6px; font-weight: bold; }
+        #estado { margin-top: 15px; font-weight: bold; }
+        img { margin-top: 10px; max-width: 100%; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Subida Forzada</h2>
+    
+    <label>Imagen 1</label>
+    <input type="file" id="foto1" accept="image/*">
+
+    <label>Imagen 2</label>
+    <input type="file" id="foto2" accept="image/*">
+
+    <button onclick="subir()">Subir con API Key</button>
+    <p id="estado"></p>
+
+    <img id="preview" src="https://res.cloudinary.com/dxgplmbg/image/upload/imagenes/foto1.jpg">
+</div>
+
+<script>
+const CLOUD_NAME = "dxgplmbg";
+const API_KEY = "642941376157928"; // Tu API Key de la captura
+const UPLOAD_PRESET = "github_upload";
+
+async function subir() {
+    const f1 = document.getElementById("foto1").files[0];
+    const f2 = document.getElementById("foto2").files[0];
+    const estado = document.getElementById("estado");
+
+    if (!f1 || !f2) {
+        estado.innerText = "⚠️ Seleccioná ambos archivos";
+        return;
+    }
+
+    estado.innerText = "Subiendo con seguridad desactivada... ⏳";
+
+    try {
+        // Forzamos la subida con el public_id que queremos
+        await enviarConKey(f1, "imagenes/foto1");
+        await enviarConKey(f2, "imagenes/foto2");
+
+        estado.innerText = "✅ ¡Subida Exitosa!";
+        estado.style.color = "green";
+
+        document.getElementById("preview").src = 
+            `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/imagenes/foto1.jpg?v=${new Date().getTime()}`;
+
+    } catch (e) {
+        estado.innerText = "❌ Error: " + e.message;
+        estado.style.color = "red";
+    }
+}
+
+async function enviarConKey(file, publicId) {
+    const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+    formData.append("api_key", API_KEY);
+    formData.append("public_id", publicId);
+    formData.append("overwrite", "true");
+
+    const resp = await fetch(url, { method: "POST", body: formData });
+    const data = await resp.json();
+
+    if (!resp.ok) throw new Error(data.error.message);
+    return data;
+}
+</script>
+</body>
+</html>
