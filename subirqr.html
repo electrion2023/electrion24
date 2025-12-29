@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Subida Correcta</title>
+    <style>
+        body { font-family: Arial; background: #f2f2f2; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: #fff; padding: 25px; border-radius: 12px; width: 320px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        label { display: block; margin-top: 15px; font-weight: bold; text-align: left; color: #333; }
+        input { width: 100%; margin-top: 5px; }
+        button { width: 100%; margin-top: 25px; padding: 12px; background: #28a745; color: #fff; border: none; cursor: pointer; border-radius: 6px; font-weight: bold; font-size: 16px; }
+        button:active { transform: scale(0.98); }
+        #estado { margin-top: 15px; font-size: 14px; font-weight: bold; min-height: 20px; }
+        .preview-label { margin-top: 20px; display: block; font-size: 12px; color: #666; }
+        img { margin-top: 5px; max-width: 100%; border-radius: 4px; border: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2 style="margin-top:0">Actualizar Fotos</h2>
+
+    <label>Imagen 1</label>
+    <input type="file" id="foto1" accept="image/*">
+
+    <label>Imagen 2</label>
+    <input type="file" id="foto2" accept="image/*">
+
+    <button onclick="subir()">Subir y Reemplazar</button>
+    <p id="estado"></p>
+
+    <span class="preview-label">Vista previa actual:</span>
+    <img id="preview" src="https://res.cloudinary.com/dxgplmbg/image/upload/imagenes/foto1.jpg">
+</div>
+
+<script>
+const CLOUD_NAME = "dxgplmbg";
+const UPLOAD_PRESET = "github_upload";
+
+async function subir() {
+    const f1 = document.getElementById("foto1").files[0];
+    const f2 = document.getElementById("foto2").files[0];
+    const estado = document.getElementById("estado");
+    const preview = document.getElementById("preview");
+
+    if (!f1 || !f2) {
+        estado.innerText = "⚠️ Seleccioná ambos archivos";
+        estado.style.color = "orange";
+        return;
+    }
+
+    estado.innerText = "Subiendo imágenes... ⏳";
+    estado.style.color = "#555";
+
+    try {
+        // Ejecutamos las subidas
+        await enviar(f1, "foto1");
+        await enviar(f2, "foto2");
+
+        estado.innerText = "✅ ¡Actualizado con éxito!";
+        estado.style.color = "green";
+
+        // Refrescar la imagen con el truco del tiempo para romper la caché
+        preview.src = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/imagenes/foto1.jpg?v=${new Date().getTime()}`;
+
+    } catch (e) {
+        estado.innerText = "❌ Error: " + e.message;
+        estado.style.color = "red";
+    }
+}
+
+async function enviar(file, nombreFijo) {
+    const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
+    const formData = new FormData();
+
+    // Renombramos el archivo antes de enviarlo
+    // Esto hace que Cloudinary lo guarde como "foto1" o "foto2"
+    const archivoParaSubir = new File([file], `${nombreFijo}.jpg`, { type: file.type });
+
+    formData.append("file", archivoParaSubir);
+    formData.append("upload_preset", UPLOAD_PRESET);
+
+    const resp = await fetch(url, { method: "POST", body: formData });
+    const data = await resp.json();
+
+    if (!resp.ok) throw new Error(data.error.message);
+    return data;
+}
+</script>
+
+</body>
+</html>
